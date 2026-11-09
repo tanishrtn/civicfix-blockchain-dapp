@@ -32,17 +32,26 @@ async function connectWallet() {
     currentAccount = (await signer.getAddress()).toLowerCase();
     contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
     const network = await provider.getNetwork();
+    el("walletStatus").textContent = shortAddress(currentAccount);
+    el("networkStatus").textContent = `${network.name} (${network.chainId})`;
 
-if (network.chainId !== 1337n) {
-  contract = null;
+    if (network.chainId !== EXPECTED_CHAIN_ID) {
+      contract = null;
+      notify(
+        `Wrong network: chain ${network.chainId}. Switch to ${EXPECTED_NETWORK_NAME} (${EXPECTED_CHAIN_ID}).`,
+        true
+      );
+      return;
+    }
 
-  notify(
-    `Wrong network! Current chain ID: ${network.chainId}. Switch to Ganache Local.`,
-    true
-  );
-
-  return;
-} catch (error) { notify(readableError(error), true); }
+    await refreshData();
+    notify("Wallet connected successfully.");
+  } catch (error) {
+    provider = null;
+    signer = null;
+    contract = null;
+    notify(readableError(error), true);
+  }
 }
 
 async function runTransaction(send, successMessage) {

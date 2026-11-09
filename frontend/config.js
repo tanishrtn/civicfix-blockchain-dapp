@@ -1,5 +1,7 @@
 // Replace after deploying CivicFix.sol through Remix IDE.
 const CONTRACT_ADDRESS = "0xBA3ccee216D93d4fD784c6C4620659F333A8812b";
+const EXPECTED_CHAIN_ID = 1337n;
+const EXPECTED_NETWORK_NAME = "Ganache Local";
 
 const CONTRACT_ABI = [
   "function communityName() view returns (string)",
