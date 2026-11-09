@@ -1,6 +1,6 @@
-.DS_Store
 node_modules/
-.env
-*.key
-*.pem
+artifacts/
+cache/
 coverage/
+.env
+*.log

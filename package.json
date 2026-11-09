@@ -1,0 +1,16 @@
+{
+  "name": "civicfix-blockchain-dapp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tested Ethereum registry for transparent community repair requests",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "check:frontend": "node --check frontend/config.js && node --check frontend/app.js",
+    "verify": "npm run check:frontend && npm test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "5.0.0",
+    "hardhat": "2.28.0"
+  }
+}

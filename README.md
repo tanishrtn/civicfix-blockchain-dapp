@@ -2,6 +2,25 @@
 
 CivicFix is an original Ethereum DApp for neighbourhoods, campuses, and housing communities that need a transparent way to report small repair needs and coordinate volunteers. A resident publishes a request, a different wallet claims it, and only the original requester can verify completion. The contract keeps a tamper-evident status history without storing personal information or private credentials.
 
+## Working architecture
+
+```text
+Browser UI -> MetaMask -> Ethereum-compatible network -> CivicFix.sol
+     |                                                |
+     +---- Ethers.js reads request state and events --+
+```
+
+The contract enforces the lifecycle and authorization rules. The browser never receives or stores a wallet private key.
+
+## Automated verification
+
+```bash
+npm install
+npm run verify
+```
+
+This checks the frontend JavaScript syntax, compiles Solidity 0.8.24, and runs contract tests covering input validation, creation, claiming, completion, events, and unauthorized access. GitHub Actions runs the same verification on every push and pull request.
+
 ## Assignment requirement map
 
 | Requirement | Implementation |
@@ -22,6 +41,10 @@ CivicFix_Assignment2/
 ├── frontend/styles.css
 ├── frontend/app.js
 ├── frontend/config.js
+├── test/CivicFix.test.js
+├── hardhat.config.js
+├── package.json
+├── .github/workflows/ci.yml
 ├── deployment/DEPLOYMENT.md
 ├── testing/TEST_RESULTS.md
 └── evidence/
@@ -47,6 +70,8 @@ python3 -m http.server 8080
 ```
 
 Open `http://localhost:8080`. Select **Connect MetaMask**, approve the connection, and verify that MetaMask is on the same network used for deployment. Save the wallet screenshot as `evidence/03-metamask-connected.png`.
+
+`frontend/config.js` keeps the expected chain ID and contract address in one place. Change both values when using a network other than the included Ganache example.
 
 ## Interact with the contract
 
